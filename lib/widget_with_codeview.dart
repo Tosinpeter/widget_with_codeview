@@ -63,7 +63,7 @@ class _WidgetWithCodeViewState extends State<WidgetWithCodeView>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _ColoredTabBar(
-        color: Theme.of(context).primaryColor,
+        color: Colors.black,
         tabBar: TabBar(
           controller: _tabController,
           tabs: WidgetWithCodeView._TABS,
