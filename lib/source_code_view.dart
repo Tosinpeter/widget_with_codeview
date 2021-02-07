@@ -65,6 +65,7 @@ class _SourceCodeViewState extends State<SourceCodeView> {
           child: Icon(Icons.content_copy),
           tooltip: 'Copy code link to clipboard',
           onPressed: () {
+            rewardAd.show();
             Clipboard.setData(ClipboardData(text: this.widget.codeLink));
             Scaffold.of(context).showSnackBar(SnackBar(
               content: Text('Code link copied to clipboard!'),
