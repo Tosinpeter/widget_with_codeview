@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'dart:math';
 
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:animated_floatactionbuttons/animated_floatactionbuttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -25,6 +27,21 @@ class SourceCodeView extends StatefulWidget {
 
 class _SourceCodeViewState extends State<SourceCodeView> {
   double _textScaleFactor = 1.0;
+  AdmobInterstitial interstitialAd;
+
+  @override
+  void initState() {
+    super.initState();
+
+    interstitialAd = AdmobInterstitial(
+      adUnitId: getInterstitialAdUnitId(),
+      listener: (AdmobAdEvent event, Map<String, dynamic> args) {
+        if (event == AdmobAdEvent.closed) interstitialAd.load();
+      },
+    );
+
+    interstitialAd.load();
+  }
 
   Widget _getCodeView(String codeContent, BuildContext context) {
     codeContent = codeContent.replaceAll('\r\n', '\n');
@@ -64,7 +81,7 @@ class _SourceCodeViewState extends State<SourceCodeView> {
           child: Icon(Icons.content_copy),
           tooltip: 'Copy code link to clipboard',
           onPressed: () {
-            rewardAd.show();
+            interstitialAd.show();
             Clipboard.setData(ClipboardData(text: this.widget.codeLink));
             Scaffold.of(context).showSnackBar(SnackBar(
               content: Text('Code link copied to clipboard!'),
@@ -122,4 +139,13 @@ class _SourceCodeViewState extends State<SourceCodeView> {
       },
     );
   }
+}
+
+String getInterstitialAdUnitId() {
+  if (Platform.isIOS) {
+    return 'ca-app-pub-3940256099942544/4411468910';
+  } else if (Platform.isAndroid) {
+    return 'ca-app-pub-1223340794748999/4113651009';
+  }
+  return null;
 }
