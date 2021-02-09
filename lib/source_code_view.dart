@@ -14,9 +14,8 @@ class SourceCodeView extends StatefulWidget {
   const SourceCodeView({Key key, @required this.filePath, this.codeLinkPrefix})
       : super(key: key);
 
-  String get codeLink => this.codeLinkPrefix == null
-      ? null
-      : '${this.codeLinkPrefix}/${this.filePath}';
+  String get codeLink =>
+      this.codeLinkPrefix == null ? null : '${this.codeLinkPrefix}';
 
   @override
   _SourceCodeViewState createState() {
